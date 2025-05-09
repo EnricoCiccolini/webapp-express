@@ -11,7 +11,7 @@ app.use(express.json())
 
 app.use('/films', filmsRouter)
 
-
+app.use(express.static('public'))
 app.use(errorHandler)
 app.use(notFound)
 
