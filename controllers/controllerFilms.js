@@ -12,7 +12,10 @@ function index(req, res) {
     GROUP BY movies.ID`
     connection.query(sql, (err, results) => {
         if (err) return res.status(500).json({ error: 'Database query failed' })
-        res.json(results)
+        res.json(results.map(result => ({
+            ...result,
+            imagepath: process.env.DB_PATH + result.image
+        })))
     })
 
 }
