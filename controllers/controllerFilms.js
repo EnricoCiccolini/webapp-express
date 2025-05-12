@@ -3,16 +3,24 @@ const nameFilms = require('../seed/nameImageFilms')
 
 
 function index(req, res) {
-    const sql = `
-    SELECT 
-    movies.*, AVG(reviews.vote) as average_vote  
-    FROM
+
+    const { resarc } = req.query
+    console.log(resarc)
+    let sql = `
+   SELECT 
+    movies.*, AVG(reviews.vote) AS average_vote
+FROM
     movies
-    LEFT JOIN 
-    reviews on movies.id = reviews.movie_id
-    GROUP BY movies.ID`
+        LEFT JOIN
+    reviews ON movies.id = reviews.movie_id
+    `
+    if (resarc) {
+        sql += ` WHERE title like "%${resarc}%" or director like "%${resarc}%" or abstract like "%${resarc}%"`
+    }
+
+    sql += ` GROUP BY movies.ID`
     connection.query(sql, (err, results) => {
-        if (err) return res.status(500).json({ error: 'Database query failed' })
+        if (err) return res.status(500).json({ error: err })
         res.json(results.map(result => ({
             ...result,
             imagepath: process.env.DB_PATH + result.image
