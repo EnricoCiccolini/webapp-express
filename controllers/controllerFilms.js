@@ -1,4 +1,5 @@
 const connection = require('../data/db')
+const nameFilms = require('../seed/nameImageFilms')
 
 
 function index(req, res) {
@@ -28,10 +29,10 @@ function show(req, res) {
     const filmsSql = 'SELECT * FROM `db-films`.movies WHERE id = ?';
 
     const rewiuwsSql = `
-    SELECT *
+    SELECT reviews.*
     FROM reviews
     JOIN movies ON movies.id = reviews.movie_id
-    WHERE movies.id = 1
+    WHERE movies.id = ?
     `;
 
 
@@ -48,8 +49,15 @@ function show(req, res) {
     });
 }
 
+function patch(req, res) {
+
+    nameFilms(req, res, connection)
+
+
+
+}
 
 
 
 
-module.exports = { index, show }
+module.exports = { index, show, patch }

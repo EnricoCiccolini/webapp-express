@@ -10,6 +10,7 @@ router.get('/', controllerFilms.index)
 
 router.get('/:id', controllerFilms.show)
 
+router.patch('/', controllerFilms.patch)
 
 
 
