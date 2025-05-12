@@ -4,6 +4,7 @@ const port = 3004
 const filmsRouter = require('./router/films')
 const notFound = require('./middleware/notFound')
 const errorHandler = require('./middleware/errorhandler')
+const cors = require('cors')
 
 app.use(cors({
     origin: process.env.FE_APP
