@@ -8,7 +8,7 @@ function index(req, res) {
     console.log(resarc)
     let sql = `
    SELECT 
-    movies.*, AVG(reviews.vote) AS average_vote
+    movies.*, round(AVG(reviews.vote), 2) AS review_vote
 FROM
     movies
         LEFT JOIN
