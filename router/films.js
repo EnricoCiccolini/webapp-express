@@ -12,6 +12,7 @@ router.get('/:id', controllerFilms.show)
 
 router.patch('/', controllerFilms.patch)
 
+router.post('/:id/reviews', controllerFilms.postReview)
 
 
 

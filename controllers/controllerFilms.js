@@ -58,7 +58,7 @@ function show(req, res) {
 
         connection.query(rewiuwsSql, [id], (err, reviewsResults) => {
             if (err) return res.status(500).json({ error: 'Database query failed' });
-            film.tags = reviewsResults;
+            film.reviews = reviewsResults;
             res.json({
                 ...film,
                 imagepath: process.env.DB_PATH + film.image
@@ -76,6 +76,45 @@ function patch(req, res) {
 }
 
 
+function postReview(req, res) {
+    const { id } = req.params
+
+    const { name, vote, text } = req.body
 
 
-module.exports = { index, show, patch }
+
+
+
+    let notValid = false
+
+    if (name.length > 30) {
+        notValid = true
+    }
+    if (vote < 0 || vote > 5) {
+        notValid = true
+    }
+
+
+
+
+
+    if (notValid) {
+        res.status(500).json('dati non validi ')
+    } else {
+
+        res.status(200).json(`commento aggiunto con successo al film ${id} `)
+    }
+
+
+
+
+
+
+
+}
+
+
+
+
+
+module.exports = { index, show, patch, postReview }
