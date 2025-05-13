@@ -76,41 +76,35 @@ function patch(req, res) {
 }
 
 
+
+
+
 function postReview(req, res) {
-    const { id } = req.params
+    const { id } = req.params;
+    const { name, vote, text } = req.body;
 
-    const { name, vote, text } = req.body
-
-
-
-
-
-    let notValid = false
+    let notValid = false;
 
     if (name.length > 30) {
-        notValid = true
+        notValid = true;
     }
     if (vote < 0 || vote > 5) {
-        notValid = true
+        notValid = true;
     }
 
-
-
-
+    let sql = `INSERT INTO reviews (movie_id, name, vote, text) VALUES ( ?, ?, ?, ?)`;
 
     if (notValid) {
-        res.status(500).json('dati non validi ')
+        return res.status(400).json('Dati non validi');
     } else {
-
-        res.status(200).json(`commento aggiunto con successo al film ${id} `)
+        connection.query(sql, [id, name, vote, text], (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: err });
+            }
+            res.status(204).json('Recensione creata con successo');
+        });
     }
-
-
-
-
-
-
-
 }
 
 
