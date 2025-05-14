@@ -84,11 +84,17 @@ function postReview(req, res) {
     const { name, vote, text } = req.body;
 
     let notValid = false;
+    const parsedVote = parseInt(vote);
+
+    if (isNaN(parsedVote)) {
+        notValid = true;
+    }
 
     if (name.length > 30) {
         notValid = true;
     }
-    if (vote < 0 || vote > 5) {
+
+    if (parsedVote < 1 || parsedVote > 5) {
         notValid = true;
     }
 
@@ -97,16 +103,15 @@ function postReview(req, res) {
     if (notValid) {
         return res.status(400).json('Dati non validi');
     } else {
-        connection.query(sql, [id, name, vote, text], (err) => {
+        connection.query(sql, [id, name, parsedVote, text], (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).json({ error: err });
             }
-            res.status(204).json('Recensione creata con successo');
+            res.status(200).json('Recensione creata con successo');
         });
     }
 }
-
 
 
 
