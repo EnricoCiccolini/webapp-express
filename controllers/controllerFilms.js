@@ -116,18 +116,18 @@ function postReview(req, res) {
 
 function store(req, res) {
 
-    const { title, director } = req.body;
+    const { title, director, genre, release_year, abstract } = req.body;
     let notValid = false
     const imageName = req.file.filename
 
 
 
-    let sql = `INSERT INTO movies (title, director,image ) VALUES ( ?, ? ,?)`;
+    let sql = `INSERT INTO movies (title, director, genre, release_year, abstract, image ) VALUES ( ? , ? , ? , ? , ? , ? )`;
 
     if (notValid) {
         return res.status(400).json('Dati non validi');
     } else {
-        connection.query(sql, [title, director, imageName], (err) => {
+        connection.query(sql, [title, director, genre, release_year, abstract, imageName], (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).json({ error: err });
