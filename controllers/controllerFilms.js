@@ -114,6 +114,36 @@ function postReview(req, res) {
 }
 
 
+function store(req, res) {
+
+    const { title, director } = req.body;
+    let notValid = false
+    const imageName = req.file.filename
 
 
-module.exports = { index, show, patch, postReview }
+
+    let sql = `INSERT INTO movies (title, director,image ) VALUES ( ?, ? ,?)`;
+
+    if (notValid) {
+        return res.status(400).json('Dati non validi');
+    } else {
+        connection.query(sql, [title, director, imageName], (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: err });
+            }
+            res.status(200).json('film aggiunto  con successo');
+        });
+    }
+}
+
+
+
+
+
+
+
+
+
+
+module.exports = { index, show, patch, postReview, store }
