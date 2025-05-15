@@ -1,5 +1,7 @@
 const connection = require('../data/db')
 const nameFilms = require('../seed/nameImageFilms')
+const slugFilms = require('../seed/slugFilm')
+
 
 
 function index(req, res) {
@@ -67,7 +69,7 @@ function show(req, res) {
     });
 }
 
-function patch(req, res) {
+function patchNameImage(req, res) {
 
     nameFilms(req, res, connection)
 
@@ -139,11 +141,17 @@ function store(req, res) {
 
 
 
+function patchslug(req, res) {
+
+    slugFilms(req, res, connection)
+
+
+
+}
 
 
 
 
 
 
-
-module.exports = { index, show, patch, postReview, store }
+module.exports = { index, show, patchNameImage, postReview, store, patchslug }

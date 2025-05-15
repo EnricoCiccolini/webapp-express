@@ -10,7 +10,9 @@ router.get('/', controllerFilms.index)
 
 router.get('/:id', controllerFilms.show)
 
-router.patch('/', controllerFilms.patch)
+router.patch('/image', controllerFilms.patchNameImage)
+
+router.patch('/slug', controllerFilms.patchslug)
 
 router.post('/:id/reviews', controllerFilms.postReview)
 
